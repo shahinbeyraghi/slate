@@ -3,13 +3,10 @@ title: API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
   - shell
-  - ruby
-  - python
-  - javascript
+  - php
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
-  - <a href='https://github.com/slatedocs/slate'>Documentation Powered by Slate</a>
+  - <a href='https://cl.parspack.com/clpanel/client-area/dashboard'>Sign Up for a JWT token</a>
 
 includes:
   - errors
@@ -21,221 +18,338 @@ code_clipboard: true
 
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+Welcome to the Parspack API! You can use our API to access Management Your Cloud , which can get information on projects, VMs, and edit them in our database.
 
-We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
-
-This example API documentation page was created with [Slate](https://github.com/slatedocs/slate). Feel free to edit it and use it as a base for your own API's documentation.
+We have language bindings in PHP! You can view code examples in the dark area to the right.
 
 # Authentication
 
 > To authorize, use this code:
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-```
 
 ```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here" \
-  -H "Authorization: meowmeowmeow"
+curl --location --request GET '{url}' \
+--header 'Authorization: Bearer {token}'
 ```
 
-```javascript
-const kittn = require('kittn');
+```php
+$curl = curl_init();
 
-let api = kittn.authorize('meowmeowmeow');
+curl_setopt_array($curl, array(
+    CURLOPT_URL => '{url}',
+    CURLOPT_HTTPHEADER => array(
+        'Authorization: Bearer {token}'
+        )
+    )
+);
 ```
 
-> Make sure to replace `meowmeowmeow` with your API key.
+> Make sure to replace `{token}` with your JWT token and {url} with end point address.
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
+Parspack uses JWT token authentication to allow access to the API. You can get a new JWT token at our [developer portal](https://cl.parspack.com/clients/cloud3/servers).
 
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
+We expects for the JWT token to be included in all API requests to the server in a header that looks like the following:
 
-`Authorization: meowmeowmeow`
+`Authorization: Bearer {token}`
 
 <aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
+You must replace <code>{token}</code> with your personal JWT token.
 </aside>
 
-# Kittens
+# APIs
 
-## Get All Kittens
+## Get All Your VMs
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
 
 ```shell
-curl "http://example.com/api/kittens" \
-  -H "Authorization: meowmeowmeow"
+curl --location --request GET '{baseUrl}/vm' \
+--header 'Authorization: Basic {token}'
 ```
 
-```javascript
-const kittn = require('kittn');
+```php
+$curl = curl_init();
 
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
+curl_setopt_array($curl, array(
+  CURLOPT_URL => '{baseUrl}/vm',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 0,
+  CURLOPT_FOLLOWLOCATION => true,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'GET',
+  CURLOPT_HTTPHEADER => array(
+    'Authorization: Basic {token}',
+  ),
+));
+
+$response = curl_exec($curl);
+curl_close($curl);
+echo $response;
 ```
 
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
+{
+  "success": true,
+  "data": [
+    {
+      "srv": 500088,
+      "vmstatus": "running",
+      "vmtitle": "test2",
+      "vmos": "CentOS7-CI",
+      "vmtype": "commercial",
+      "vmostype": "centos",
+      "lock_reason": "lockForBuild",
+      "srv_status": "active",
+      "suspendreason": [
+        "Suspend because of credit"
+      ],
+      "project_id": null,
+      "id": 80,
+      "iscommercial": true,
+      "isPrivateCloud": false,
+      "issuspend": true,
+      "dedicatedip": "185.208.172.18",
+      "connectionstatus": "",
+      "domainstatus": "Active",
+      "notes": ""
+    },
+    {
+      "srv": 500105,
+      "vmstatus": "stopped",
+      "vmtitle": "test5",
+      "vmos": "ubuntu16-nolvm",
+      "vmtype": "commercial",
+      "vmostype": "ubuntu",
+      "lock_reason": "lockForBuild",
+      "srv_status": "active",
+      "suspendreason": [
+        ""
+      ],
+      "project_id": null,
+      "id": 96,
+      "iscommercial": true,
+      "isPrivateCloud": false,
+      "issuspend": false,
+      "dedicatedip": "185.208.172.25",
+      "connectionstatus": "در حال بررسی توسط تیم پشتیبانی",
+      "domainstatus": "Active",
+      "notes": ""
+    }
+  ]
+}
 ```
 
-This endpoint retrieves all kittens.
+This endpoint retrieves your all servers.
 
 ### HTTP Request
 
-`GET http://example.com/api/kittens`
+`GET {baseUrl}/vm`
+
+
+
+## Get VM info
+
+```shell
+curl --location --request GET '{baseUrl}/vm/{vmId}/info' \
+--header 'Authorization: Basic {token}'
+```
+
+```php
+$curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_URL => '{baseUrl}/vm/{vmId}/info',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 0,
+  CURLOPT_FOLLOWLOCATION => true,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'GET',
+  CURLOPT_HTTPHEADER => array(
+    'Authorization: Basic {token}',
+  ),
+));
+
+$response = curl_exec($curl);
+curl_close($curl);
+echo $response;
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "success": true,
+  "data": {
+    "location": "eu",
+    "ram": 1024,
+    "cpu": 1,
+    "hdd": 25,
+    "status": "running",
+    "title": "test2",
+    "vp": "faPwN8imsZz8nQ",
+    "os": "CentOS7-CI",
+    "ostype": "centos",
+    "type": "commercial",
+    "dailyBudget": -1,
+    "guestagent": 0,
+    "ip": "185.208.172.18",
+    "srv": 500088,
+    "project_id": null,
+    "isfree": false,
+    "iscommercial": true,
+    "isPrivateCloud": false,
+    "charge": 3600,
+    "id": 80,
+    "domainstatus": "Active",
+    "notes": "",
+    "bandwidthUsage": 0,
+    "bandwidthLimit": 0,
+    "dlBandwidthUsage": 0
+  }
+}
+```
+
+This endpoint retrieves your vm info.
+
+### HTTP Request
+
+`GET {baseUrl}/vm/{vmId}/info`
 
 ### Query Parameters
 
 Parameter | Default | Description
 --------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
+{vmId} | true | Set vm id
 
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
+<aside class="notice">
+Remember set {vmID} in url not in GET parameters
 </aside>
 
-## Get a Specific Kitten
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
+## Get VM ips list
 
 ```shell
-curl "http://example.com/api/kittens/2" \
-  -H "Authorization: meowmeowmeow"
+curl --location --request GET '{baseUrl}/vm/{vmId}/ip/list' \
+--header 'Authorization: Basic {token}'
 ```
 
-```javascript
-const kittn = require('kittn');
+```php
+$curl = curl_init();
 
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
+curl_setopt_array($curl, array(
+  CURLOPT_URL => '{baseUrl}/vm/{vmId}/ip/list',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 0,
+  CURLOPT_FOLLOWLOCATION => true,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'GET',
+  CURLOPT_HTTPHEADER => array(
+    'Authorization: Basic {token}',
+  ),
+));
+
+$response = curl_exec($curl);
+curl_close($curl);
+echo $response;
 ```
 
 > The above command returns JSON structured like this:
 
 ```json
 {
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
+  "success": true,
+  "data": [
+    {
+      "ip": "185.208.172.18"
+    }
+  ]
 }
 ```
 
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+This endpoint retrieves your vm ips list.
 
 ### HTTP Request
 
-`GET http://example.com/kittens/<ID>`
+`GET {baseUrl}/vm/{vmId}/ip/list`
 
-### URL Parameters
+### Query Parameters
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
+Parameter | Default | Description
+--------- | ------- | -----------
+{vmId} | true | Set vm id
 
-## Delete a Specific Kitten
+<aside class="notice">
+Remember set {vmID} in url not in GET parameters
+</aside>
 
-```ruby
-require 'kittn'
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
-```
 
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
-```
+## Change vm title
 
 ```shell
-curl "http://example.com/api/kittens/2" \
-  -X DELETE \
-  -H "Authorization: meowmeowmeow"
+curl --location --request PUT '{baseUrl}/vm/{vmId}changeTitle' \
+--header 'Authorization: Basic {token}' \
+--form 'title="test11"'
+
 ```
 
-```javascript
-const kittn = require('kittn');
+```php
+$curl = curl_init();
 
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
+curl_setopt_array($curl, array(
+  CURLOPT_URL => '{baseUrl}/vm/{vmId}changeTitle',
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 0,
+  CURLOPT_FOLLOWLOCATION => true,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'PUT',
+  CURLOPT_POSTFIELDS => array('title' => 'test11'),
+  CURLOPT_HTTPHEADER => array(
+    'Authorization: Basic {token}',
+  ),
+));
+
+$response = curl_exec($curl);
+curl_close($curl);
+echo $response;
 ```
 
 > The above command returns JSON structured like this:
 
 ```json
 {
-  "id": 2,
-  "deleted" : ":("
+  "success": true,
+  "data": [
+    {
+      "ip": "185.208.172.18"
+    }
+  ]
 }
 ```
 
-This endpoint deletes a specific kitten.
+This endpoint retrieves your vm ips list.
 
 ### HTTP Request
 
-`DELETE http://example.com/kittens/<ID>`
+`PUT {baseUrl}/vm/{vmId}changeTitle`
 
-### URL Parameters
+### Query Parameters
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to delete
+Parameter | Default | Description
+--------- | ------- | -----------
+{vmId} | true | Set vm id
+title | null | Set new title for vm
+
+<aside class="notice">
+Remember set {vmID} in url not in GET parameters
+</aside>
 
