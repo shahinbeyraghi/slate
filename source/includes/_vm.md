@@ -15,9 +15,64 @@
 
 ## Create VM
 
+```javascript
+var request = require('request');
+var options = {
+  'method': 'POST',
+  'url': '{baseUrl}/vm/createVm',
+  'headers': {
+    'Accept': 'application/json',
+    'Authorization': 'Basic {token}'
+  },
+  formData: {
+    'title': '{title}',
+    'ram': '{ram}',
+    'cpu': '{cpu}',
+    'hdd': '{hdd}',
+    'os': '{os}',
+    'location': '{location}'
+  }
+};
+request(options, function (error, response) {
+  if (error) throw new Error(error);
+  console.log(response.body);
+});
+
+```
+
+```python
+import requests
+
+url = "{baseUrl}/vm/createVm"
+payload={
+'title': '{title}',
+'ram': '{ram}',
+'cpu': '{cpu}',
+'hdd': '{hdd}',
+'os': '{os}',
+'location': '{location}'}
+files=[
+
+]
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'Basic {token}'
+}
+
+response = requests.request("POST", url, headers=headers, data=payload, files=files)
+print(response.text)
+
+```
+
 ```shell
-curl --location --request PUT '{baseUrl}/vm/createVm' \
+curl --location --request POST '{baseUrl}/vm/createVm' \
 --header 'Authorization: Basic {token}' \
+--form 'title="{title}"' \
+--form 'ram="{ram}"' \
+--form 'cpu="{cpu}"' \
+--form 'hdd="{hdd}"' \
+--form 'os="{os}"' \
+--form 'location="{location}"'
 
 ```
 
@@ -32,7 +87,9 @@ curl_setopt_array($curl, array(
   CURLOPT_TIMEOUT => 0,
   CURLOPT_FOLLOWLOCATION => true,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-  CURLOPT_CUSTOMREQUEST => 'PUT',
+  CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS => array('title' => '{title}', 'ram' => '{ram}', 'cpu' => '{cpu}',
+    'hdd' => '{hdd}', 'os' => '{os}', 'location' => 'location'),
   CURLOPT_HTTPHEADER => array(
     'Authorization: Basic {token}',
   ),
@@ -70,19 +127,19 @@ This endpoint create a vm.
 
 ### Query Parameters
 
-Parameter      | Required | Type     | Acceptable Values                                       | Description
----------      | -------  | -------- | -----------------------------                           | -----------
-title          | true     | string   | ^[A-Za-z0-9- ]+$                                        | Set vm title
-os             | true     | string   | ^[A-Za-z0-9-._ ]+$ (os list is [here](#get-os-list))    | Set vm os
-location       | true     | string   | ir,eu                                                   | set location value
-ram            | true     | integer  | min requirement ram for choosen os (1024-16384)         | Set ram amount
-cpu            | true     | integer  | min requirement cpu for choosen os (1-16)               | Set cpu cores count
-hdd            | true     | integer  | min requirement hdd for choosen os (25-150)             | Set HDD space
-voucher        | false    | string   | ^[A-Za-z0-9]+$                                          | Set voucher
-node_id        | false    | integer  | choosen location node id                                | Set node id
-storage_id     | false    | integer  | specific storage id                                     | Set storage id
-ip_pool_id     | false    | integer  | specific ip pool id                                     | Set ip pool id
-project_id     | false    | integer  | your specific project id                                | Set project id
+Parameter        | Required | Type     | Acceptable Values                                       | Description
+---------        | -------  | -------- | -----------------------------                           | -----------
+{title}          | true     | string   | ^[A-Za-z0-9- ]+$                                        | Set vm title
+{os}             | true     | string   | ^[A-Za-z0-9-._ ]+$ (os list is [here](#get-os-list))    | Set vm os
+{location}       | true     | string   | ir,eu                                                   | set location value
+{ram}            | true     | integer  | min requirement ram for choosen os (1024-16384)         | Set ram amount
+{cpu}            | true     | integer  | min requirement cpu for choosen os (1-16)               | Set cpu cores count
+{hdd}            | true     | integer  | min requirement hdd for choosen os (25-150)             | Set HDD space
+{voucher}        | false    | string   | ^[A-Za-z0-9]+$                                          | Set voucher
+{node_id}        | false    | integer  | choosen location node id                                | Set node id
+{storage_id}     | false    | integer  | specific storage id                                     | Set storage id
+{ip_pool_id}     | false    | integer  | specific ip pool id                                     | Set ip pool id
+{project_id}     | false    | integer  | your specific project id                                | Set project id
 
 
 ### Response Parameters
@@ -127,9 +184,44 @@ false | Iran cloud user must be from iran -- turn of vpn
 
 ## Start VM
 
+```javascript
+var request = require('request');
+var options = {
+    'method': 'POST',
+    'url': '{baseUrl}/vm/{vmId}/start',
+    'headers': {
+        'Authorization': 'Basic {token}',
+        'Accept': 'application/json'
+    },
+    formData: {
+
+    }
+};
+request(options, function (error, response) {
+    if (error) throw new Error(error);
+    console.log(response.body);
+});
+
+```
+
+```python
+import requests
+
+url = "{baseUrl}/vm/{vmId}/start"
+
+payload={}
+files={}
+headers = {
+  'Authorization': 'Basic {token}',
+  'Accept': 'application/json'
+}
+response = requests.request("POST", url, headers=headers, data=payload, files=files)
+print(response.text)
+```
+
 ```shell
 curl --location --request POST '{baseUrl}/vm/{vmId}/start' \
---header 'Authorization: Basic {token}' \
+--header 'Authorization: Basic {token}'
 
 ```
 
@@ -203,9 +295,45 @@ Remember change {vmID} with your vm id in url
 
 ## Stop VM
 
+
+```javascript
+var request = require('request');
+var options = {
+    'method': 'POST',
+    'url': '{baseUrl}/vm/{vmId}/stop',
+    'headers': {
+        'Authorization': 'Basic {token}',
+        'Accept': 'application/json'
+    },
+    formData: {
+
+    }
+};
+request(options, function (error, response) {
+    if (error) throw new Error(error);
+    console.log(response.body);
+});
+
+```
+
+```python
+import requests
+
+url = "{baseUrl}/vm/{vmId}/stop"
+
+payload={}
+files={}
+headers = {
+  'Authorization': 'Basic {token}',
+  'Accept': 'application/json'
+}
+response = requests.request("POST", url, headers=headers, data=payload, files=files)
+print(response.text)
+```
+
 ```shell
 curl --location --request POST '{baseUrl}/vm/{vmId}/stop' \
---header 'Authorization: Basic {token}' \
+--header 'Authorization: Basic {token}'
 
 ```
 
@@ -279,9 +407,45 @@ Remember change {vmID} with your vm id in url
 
 ## Restart VM
 
+
+```javascript
+var request = require('request');
+var options = {
+    'method': 'POST',
+    'url': '{baseUrl}/vm/{vmId}/reset',
+    'headers': {
+        'Authorization': 'Basic {token}',
+        'Accept': 'application/json'
+    },
+    formData: {
+
+    }
+};
+request(options, function (error, response) {
+    if (error) throw new Error(error);
+    console.log(response.body);
+});
+
+```
+
+```python
+import requests
+
+url = "{baseUrl}/vm/{vmId}/reset"
+
+payload={}
+files={}
+headers = {
+  'Authorization': 'Basic {token}',
+  'Accept': 'application/json'
+}
+response = requests.request("POST", url, headers=headers, data=payload, files=files)
+print(response.text)
+```
+
 ```shell
 curl --location --request POST '{baseUrl}/vm/{vmId}/reset' \
---header 'Authorization: Basic {token}' \
+--header 'Authorization: Basic {token}'
 
 ```
 
@@ -357,6 +521,37 @@ Remember change {vmID} with your vm id in url
 
 
 ## Get all your VMs
+
+```javascript
+var request = require('request');
+var options = {
+    'method': 'GET',
+    'url': '{baseUrl}/vm',
+    'headers': {
+        'Accept': 'application/json',
+        'Authorization': 'Basic {token}'
+    }
+};
+request(options, function (error, response) {
+    if (error) throw new Error(error);
+    console.log(response.body);
+});
+
+```
+
+```python
+import requests
+
+url = "{baseUrl}/vm"
+payload={}
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'Basic {token}'
+}
+
+response = requests.request("GET", url, headers=headers, data=payload)
+print(response.text)
+```
 
 ```shell
 curl --location --request GET '{baseUrl}/vm' \
@@ -462,9 +657,38 @@ This endpoint retrieves your all servers.
 
 
 
-
-
 ## Get VM info
+
+```javascript
+var request = require('request');
+var options = {
+    'method': 'GET',
+    'url': '{baseUrl}/vm/{vmId}/info',
+    'headers': {
+        'Accept': 'application/json',
+        'Authorization': 'Basic {token}'
+    }
+};
+request(options, function (error, response) {
+    if (error) throw new Error(error);
+    console.log(response.body);
+});
+
+```
+
+```pyton
+import requests
+
+url = "{baseUrl}/vm/{vmId}/info"
+payload={}
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'Basic {token}'
+}
+
+response = requests.request("GET", url, headers=headers, data=payload)
+print(response.text)
+```
 
 ```shell
 curl --location --request GET '{baseUrl}/vm/{vmId}/info' \
@@ -561,6 +785,37 @@ Remember change {vmID} with your vm id in url
 
 ## Get VM ips list
 
+```javascript
+var request = require('request');
+var options = {
+  'method': 'GET',
+  'url': '{baseUrl}/vm/{vmId}/ip/list',
+  'headers': {
+    'Accept': 'application/json',
+    'Authorization': 'Basic {token}'
+  }
+};
+request(options, function (error, response) {
+  if (error) throw new Error(error);
+  console.log(response.body);
+});
+
+```
+
+```pyton
+import requests
+
+url = "{baseUrl}/vm/{vmId}/ip/list"
+payload={}
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'Basic {token}'
+}
+
+response = requests.request("GET", url, headers=headers, data=payload)
+print(response.text)
+```
+
 ```shell
 curl --location --request GET '{baseUrl}/vm/{vmId}/ip/list' \
 --header 'Authorization: Basic {token}'
@@ -632,9 +887,44 @@ Remember change {vmID} with your vm id in url
 
 ## Change vm title
 
+```javascript
+var request = require('request');
+var options = {
+    'method': 'PUT',
+    'url': '{baseUrl}/vm/{vmId}changeTitle',
+    'headers': {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json',
+        'Authorization': 'Basic {token}'
+    },
+    form: {
+        'title': 'new server2'
+    }
+};
+request(options, function (error, response) {
+    if (error) throw new Error(error);
+    console.log(response.body);
+});
+```
+
+```pyton
+import requests
+
+url = "{baseUrl}/vm/{vmId}changeTitle"
+payload='title=new%20server2'
+headers = {
+  'Content-Type': 'application/x-www-form-urlencoded',
+  'Accept': 'application/json',
+  'Authorization': 'Basic {token}',
+}
+
+response = requests.request("PUT", url, headers=headers, data=payload)
+print(response.text)
+```
+
 ```shell
 curl --location --request PUT '{baseUrl}/vm/{vmId}changeTitle' \
---header 'Authorization: Basic {token}' \
+--header 'Authorization: Basic {token}'
 --form 'title="test11"'
 
 ```
@@ -707,9 +997,44 @@ Remember change {vmID} with your vm id in url
 
 ## Set daily budget
 
+```javascript
+var request = require('request');
+var options = {
+    'method': 'PUT',
+    'url': '{baseUrl}/vm/{vmId}/dailybudget/set',
+    'headers': {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json',
+        'Authorization': 'Basic {token}'
+    },
+    form: {
+        'daily_budget': '{amount}'
+    }
+};
+request(options, function (error, response) {
+    if (error) throw new Error(error);
+    console.log(response.body);
+});
+```
+
+```python
+import requests
+
+url = "{baseUrl}/vm/{vmId}/dailybudget/set"
+payload='daily_budget={amount}'
+headers = {
+  'Content-Type': 'application/x-www-form-urlencoded',
+  'Accept': 'application/json',
+  'Authorization': 'Basic {token}'
+}
+
+response = requests.request("PUT", url, headers=headers, data=payload)
+print(response.text)
+```
+
 ```shell
 curl --location --request PUT '{baseUrl}/vm/{vmId}/dailybudget/set?daily_budget={amount}' \
---header 'Authorization: Basic {token}' \
+--header 'Authorization: Basic {token}'
 
 ```
 
@@ -783,10 +1108,53 @@ Remember change {amount} with your specific amount for daily budget in url
 
 ## Change VM spaces
 
+```javascript
+var request = require('request');
+var options = {
+    'method': 'POST',
+    'url': '{baseUrl}/vm/{vmId}/changeSpecs',
+    'headers': {
+        'Accept': 'application/json',
+        'Authorization': 'Basic {token}'
+    },
+    formData: {
+        'ram': '{ram}',
+        'cpu': '{cpu}'
+    }
+};
+request(options, function (error, response) {
+    if (error) throw new Error(error);
+    console.log(response.body);
+});
+
+```
+
+```python
+import requests
+
+url = "{baseUrl}/vm/{vmId}/changeSpecs"
+
+payload={
+    'ram': '{ram}',
+    'cpu': '{cpu}'
+}
+files=[
+
+]
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'Basic {token}'
+}
+
+response = requests.request("POST", url, headers=headers, data=payload, files=files)
+print(response.text)
+```
+
 ```shell
 curl --location --request POST '{baseUrl}/vm/{vmId}/changeSpecs' \
---header 'Authorization: Basic {token}' \
-
+--header 'Authorization: Basic {token}'\
+--form 'ram="{ram}"' \
+--form 'cpu="{cpu}"'
 ```
 
 ```php
@@ -801,6 +1169,7 @@ curl_setopt_array($curl, array(
   CURLOPT_FOLLOWLOCATION => true,
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => 'POST',
+  CURLOPT_POSTFIELDS => array('ram' => '{ram}','cpu' => '{cpu}'),
   CURLOPT_HTTPHEADER => array(
     'Authorization: Basic {token}',
   ),
@@ -860,6 +1229,38 @@ Remember change {vmID} with your vm id in url
 
 
 ## Get OS list
+
+```javascript
+var request = require('request');
+var options = {
+  'method': 'GET',
+  'url': '{baseUrl}/vm/os/list/all',
+  'headers': {
+    'Accept': 'application/json',
+    'Authorization': 'Basic {token}',
+  }
+};
+request(options, function (error, response) {
+  if (error) throw new Error(error);
+  console.log(response.body);
+});
+
+```
+
+```python
+import requests
+
+url = "baseUrl}/vm/os/list/all"
+payload={}
+files={}
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'Basic {token}',
+}
+
+response = requests.request("GET", url, headers=headers, data=payload, files=files)
+print(response.text)
+```
 
 ```shell
 curl --location --request GET '{baseUrl}/vm/os/list/all' \

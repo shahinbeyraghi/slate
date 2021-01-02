@@ -2,6 +2,8 @@
 title: API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
+  - javascript
+  - python
   - shell
   - php
 
@@ -26,6 +28,25 @@ We have language bindings in PHP! You can view code examples in the dark area to
 # Authentication
 
 > To authorize, use this code:
+
+
+```javascript
+var options = {
+    'headers': {
+        'Accept': 'application/json',
+        'Authorization': 'Basic {token}'
+    }
+}
+```
+
+```python
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'Basic {token}',
+}
+
+response = requests.request("Method", url, headers=headers, data=payload, files=files)
+```
 
 
 ```shell
