@@ -289,7 +289,7 @@
     </script>
   </head>
 
-  <body class="index" data-languages="[&quot;shell&quot;,&quot;php&quot;]">
+  <body class="index" data-languages="[&quot;javascript&quot;,&quot;python&quot;,&quot;shell&quot;,&quot;php&quot;]">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -299,6 +299,8 @@
     <div class="toc-wrapper">
       <img src="images/logo-d089242b.svg" class="logo" alt="" />
         <div class="lang-selector">
+              <a href="#" data-language-name="javascript">javascript</a>
+              <a href="#" data-language-name="python">python</a>
               <a href="#" data-language-name="shell">shell</a>
               <a href="#" data-language-name="php">php</a>
         </div>
@@ -370,7 +372,19 @@
 <blockquote>
 <p>To authorize, use this code:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'{url}'</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="dl">'</span><span class="s1">headers</span><span class="dl">'</span><span class="p">:</span> <span class="p">{</span>
+        <span class="dl">'</span><span class="s1">Accept</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span><span class="p">,</span>
+        <span class="dl">'</span><span class="s1">Authorization</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Basic {token}</span><span class="dl">'</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'Accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+  <span class="s">'Authorization'</span><span class="p">:</span> <span class="s">'Basic {token}'</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">request</span><span class="p">(</span><span class="s">"Method"</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="n">files</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'{url}'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Bearer {token}'</span>
 </code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$curl</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
 
@@ -395,8 +409,57 @@
 <aside class="notice">
 You must replace <code>{token}</code> with your personal JWT token.
 </aside>
-<h1 id='vm-endpoints'>VM Endpoints</h1><h2 id='create-vm'>Create VM</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> PUT <span class="s1">'{baseUrl}/vm/createVm'</span> <span class="se">\</span>
+<h1 id='vm-endpoints'>VM Endpoints</h1><h2 id='create-vm'>Create VM</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">request</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="dl">'</span><span class="s1">method</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">POST</span><span class="dl">'</span><span class="p">,</span>
+  <span class="dl">'</span><span class="s1">url</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{baseUrl}/vm/createVm</span><span class="dl">'</span><span class="p">,</span>
+  <span class="dl">'</span><span class="s1">headers</span><span class="dl">'</span><span class="p">:</span> <span class="p">{</span>
+    <span class="dl">'</span><span class="s1">Accept</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span><span class="p">,</span>
+    <span class="dl">'</span><span class="s1">Authorization</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Basic {token}</span><span class="dl">'</span>
+  <span class="p">},</span>
+  <span class="na">formData</span><span class="p">:</span> <span class="p">{</span>
+    <span class="dl">'</span><span class="s1">title</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{title}</span><span class="dl">'</span><span class="p">,</span>
+    <span class="dl">'</span><span class="s1">ram</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{ram}</span><span class="dl">'</span><span class="p">,</span>
+    <span class="dl">'</span><span class="s1">cpu</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{cpu}</span><span class="dl">'</span><span class="p">,</span>
+    <span class="dl">'</span><span class="s1">hdd</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{hdd}</span><span class="dl">'</span><span class="p">,</span>
+    <span class="dl">'</span><span class="s1">os</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{os}</span><span class="dl">'</span><span class="p">,</span>
+    <span class="dl">'</span><span class="s1">location</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{location}</span><span class="dl">'</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+<span class="nx">request</span><span class="p">(</span><span class="nx">options</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
+<span class="p">});</span>
+
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">"{baseUrl}/vm/createVm"</span>
+<span class="n">payload</span><span class="o">=</span><span class="p">{</span>
+<span class="s">'title'</span><span class="p">:</span> <span class="s">'{title}'</span><span class="p">,</span>
+<span class="s">'ram'</span><span class="p">:</span> <span class="s">'{ram}'</span><span class="p">,</span>
+<span class="s">'cpu'</span><span class="p">:</span> <span class="s">'{cpu}'</span><span class="p">,</span>
+<span class="s">'hdd'</span><span class="p">:</span> <span class="s">'{hdd}'</span><span class="p">,</span>
+<span class="s">'os'</span><span class="p">:</span> <span class="s">'{os}'</span><span class="p">,</span>
+<span class="s">'location'</span><span class="p">:</span> <span class="s">'{location}'</span><span class="p">}</span>
+<span class="n">files</span><span class="o">=</span><span class="p">[</span>
+
+<span class="p">]</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'Accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+  <span class="s">'Authorization'</span><span class="p">:</span> <span class="s">'Basic {token}'</span>
+<span class="p">}</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">request</span><span class="p">(</span><span class="s">"POST"</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="n">files</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
+
+</code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> POST <span class="s1">'{baseUrl}/vm/createVm'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Basic {token}'</span> <span class="se">\</span>
+<span class="nt">--form</span> <span class="s1">'title="{title}"'</span> <span class="se">\</span>
+<span class="nt">--form</span> <span class="s1">'ram="{ram}"'</span> <span class="se">\</span>
+<span class="nt">--form</span> <span class="s1">'cpu="{cpu}"'</span> <span class="se">\</span>
+<span class="nt">--form</span> <span class="s1">'hdd="{hdd}"'</span> <span class="se">\</span>
+<span class="nt">--form</span> <span class="s1">'os="{os}"'</span> <span class="se">\</span>
+<span class="nt">--form</span> <span class="s1">'location="{location}"'</span>
 
 </code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$curl</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
 
@@ -408,7 +471,9 @@ You must replace <code>{token}</code> with your personal JWT token.
   <span class="no">CURLOPT_TIMEOUT</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span>
   <span class="no">CURLOPT_FOLLOWLOCATION</span> <span class="o">=&gt;</span> <span class="kc">true</span><span class="p">,</span>
   <span class="no">CURLOPT_HTTP_VERSION</span> <span class="o">=&gt;</span> <span class="no">CURL_HTTP_VERSION_1_1</span><span class="p">,</span>
-  <span class="no">CURLOPT_CUSTOMREQUEST</span> <span class="o">=&gt;</span> <span class="s1">'PUT'</span><span class="p">,</span>
+  <span class="no">CURLOPT_CUSTOMREQUEST</span> <span class="o">=&gt;</span> <span class="s1">'POST'</span><span class="p">,</span>
+  <span class="no">CURLOPT_POSTFIELDS</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">'title'</span> <span class="o">=&gt;</span> <span class="s1">'{title}'</span><span class="p">,</span> <span class="s1">'ram'</span> <span class="o">=&gt;</span> <span class="s1">'{ram}'</span><span class="p">,</span> <span class="s1">'cpu'</span> <span class="o">=&gt;</span> <span class="s1">'{cpu}'</span><span class="p">,</span>
+    <span class="s1">'hdd'</span> <span class="o">=&gt;</span> <span class="s1">'{hdd}'</span><span class="p">,</span> <span class="s1">'os'</span> <span class="o">=&gt;</span> <span class="s1">'{os}'</span><span class="p">,</span> <span class="s1">'location'</span> <span class="o">=&gt;</span> <span class="s1">'location'</span><span class="p">),</span>
   <span class="no">CURLOPT_HTTPHEADER</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
     <span class="s1">'Authorization: Basic {token}'</span><span class="p">,</span>
   <span class="p">),</span>
@@ -450,77 +515,77 @@ You must replace <code>{token}</code> with your personal JWT token.
 </tr>
 </thead><tbody>
 <tr>
-<td>title</td>
+<td>{title}</td>
 <td>true</td>
 <td>string</td>
 <td>^[A-Za-z0-9- ]+$</td>
 <td>Set vm title</td>
 </tr>
 <tr>
-<td>os</td>
+<td>{os}</td>
 <td>true</td>
 <td>string</td>
 <td>^[A-Za-z0-9-._ ]+$ (os list is <a href="#get-os-list">here</a>)</td>
 <td>Set vm os</td>
 </tr>
 <tr>
-<td>location</td>
+<td>{location}</td>
 <td>true</td>
 <td>string</td>
 <td>ir,eu</td>
 <td>set location value</td>
 </tr>
 <tr>
-<td>ram</td>
+<td>{ram}</td>
 <td>true</td>
 <td>integer</td>
 <td>min requirement ram for choosen os (1024-16384)</td>
 <td>Set ram amount</td>
 </tr>
 <tr>
-<td>cpu</td>
+<td>{cpu}</td>
 <td>true</td>
 <td>integer</td>
 <td>min requirement cpu for choosen os (1-16)</td>
 <td>Set cpu cores count</td>
 </tr>
 <tr>
-<td>hdd</td>
+<td>{hdd}</td>
 <td>true</td>
 <td>integer</td>
 <td>min requirement hdd for choosen os (25-150)</td>
 <td>Set HDD space</td>
 </tr>
 <tr>
-<td>voucher</td>
+<td>{voucher}</td>
 <td>false</td>
 <td>string</td>
 <td>^[A-Za-z0-9]+$</td>
 <td>Set voucher</td>
 </tr>
 <tr>
-<td>node_id</td>
+<td>{node_id}</td>
 <td>false</td>
 <td>integer</td>
 <td>choosen location node id</td>
 <td>Set node id</td>
 </tr>
 <tr>
-<td>storage_id</td>
+<td>{storage_id}</td>
 <td>false</td>
 <td>integer</td>
 <td>specific storage id</td>
 <td>Set storage id</td>
 </tr>
 <tr>
-<td>ip_pool_id</td>
+<td>{ip_pool_id}</td>
 <td>false</td>
 <td>integer</td>
 <td>specific ip pool id</td>
 <td>Set ip pool id</td>
 </tr>
 <tr>
-<td>project_id</td>
+<td>{project_id}</td>
 <td>false</td>
 <td>integer</td>
 <td>your specific project id</td>
@@ -595,8 +660,37 @@ You must replace <code>{token}</code> with your personal JWT token.
 <td>Iran cloud user must be from iran -- turn of vpn</td>
 </tr>
 </tbody></table>
-<h2 id='start-vm'>Start VM</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> POST <span class="s1">'{baseUrl}/vm/{vmId}/start'</span> <span class="se">\</span>
-<span class="nt">--header</span> <span class="s1">'Authorization: Basic {token}'</span> <span class="se">\</span>
+<h2 id='start-vm'>Start VM</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">request</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="dl">'</span><span class="s1">method</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">POST</span><span class="dl">'</span><span class="p">,</span>
+    <span class="dl">'</span><span class="s1">url</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{baseUrl}/vm/{vmId}/start</span><span class="dl">'</span><span class="p">,</span>
+    <span class="dl">'</span><span class="s1">headers</span><span class="dl">'</span><span class="p">:</span> <span class="p">{</span>
+        <span class="dl">'</span><span class="s1">Authorization</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Basic {token}</span><span class="dl">'</span><span class="p">,</span>
+        <span class="dl">'</span><span class="s1">Accept</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span>
+    <span class="p">},</span>
+    <span class="na">formData</span><span class="p">:</span> <span class="p">{</span>
+
+    <span class="p">}</span>
+<span class="p">};</span>
+<span class="nx">request</span><span class="p">(</span><span class="nx">options</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
+<span class="p">});</span>
+
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">"{baseUrl}/vm/{vmId}/start"</span>
+
+<span class="n">payload</span><span class="o">=</span><span class="p">{}</span>
+<span class="n">files</span><span class="o">=</span><span class="p">{}</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'Authorization'</span><span class="p">:</span> <span class="s">'Basic {token}'</span><span class="p">,</span>
+  <span class="s">'Accept'</span><span class="p">:</span> <span class="s">'application/json'</span>
+<span class="p">}</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">request</span><span class="p">(</span><span class="s">"POST"</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="n">files</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> POST <span class="s1">'{baseUrl}/vm/{vmId}/start'</span> <span class="se">\</span>
+<span class="nt">--header</span> <span class="s1">'Authorization: Basic {token}'</span>
 
 </code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$curl</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
 
@@ -659,8 +753,37 @@ You must replace <code>{token}</code> with your personal JWT token.
 <aside class="notice">
 Remember change {vmID} with your vm id in url
 </aside>
-<h2 id='stop-vm'>Stop VM</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> POST <span class="s1">'{baseUrl}/vm/{vmId}/stop'</span> <span class="se">\</span>
-<span class="nt">--header</span> <span class="s1">'Authorization: Basic {token}'</span> <span class="se">\</span>
+<h2 id='stop-vm'>Stop VM</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">request</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="dl">'</span><span class="s1">method</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">POST</span><span class="dl">'</span><span class="p">,</span>
+    <span class="dl">'</span><span class="s1">url</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{baseUrl}/vm/{vmId}/stop</span><span class="dl">'</span><span class="p">,</span>
+    <span class="dl">'</span><span class="s1">headers</span><span class="dl">'</span><span class="p">:</span> <span class="p">{</span>
+        <span class="dl">'</span><span class="s1">Authorization</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Basic {token}</span><span class="dl">'</span><span class="p">,</span>
+        <span class="dl">'</span><span class="s1">Accept</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span>
+    <span class="p">},</span>
+    <span class="na">formData</span><span class="p">:</span> <span class="p">{</span>
+
+    <span class="p">}</span>
+<span class="p">};</span>
+<span class="nx">request</span><span class="p">(</span><span class="nx">options</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
+<span class="p">});</span>
+
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">"{baseUrl}/vm/{vmId}/stop"</span>
+
+<span class="n">payload</span><span class="o">=</span><span class="p">{}</span>
+<span class="n">files</span><span class="o">=</span><span class="p">{}</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'Authorization'</span><span class="p">:</span> <span class="s">'Basic {token}'</span><span class="p">,</span>
+  <span class="s">'Accept'</span><span class="p">:</span> <span class="s">'application/json'</span>
+<span class="p">}</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">request</span><span class="p">(</span><span class="s">"POST"</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="n">files</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> POST <span class="s1">'{baseUrl}/vm/{vmId}/stop'</span> <span class="se">\</span>
+<span class="nt">--header</span> <span class="s1">'Authorization: Basic {token}'</span>
 
 </code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$curl</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
 
@@ -723,8 +846,37 @@ Remember change {vmID} with your vm id in url
 <aside class="notice">
 Remember change {vmID} with your vm id in url
 </aside>
-<h2 id='restart-vm'>Restart VM</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> POST <span class="s1">'{baseUrl}/vm/{vmId}/reset'</span> <span class="se">\</span>
-<span class="nt">--header</span> <span class="s1">'Authorization: Basic {token}'</span> <span class="se">\</span>
+<h2 id='restart-vm'>Restart VM</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">request</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="dl">'</span><span class="s1">method</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">POST</span><span class="dl">'</span><span class="p">,</span>
+    <span class="dl">'</span><span class="s1">url</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{baseUrl}/vm/{vmId}/reset</span><span class="dl">'</span><span class="p">,</span>
+    <span class="dl">'</span><span class="s1">headers</span><span class="dl">'</span><span class="p">:</span> <span class="p">{</span>
+        <span class="dl">'</span><span class="s1">Authorization</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Basic {token}</span><span class="dl">'</span><span class="p">,</span>
+        <span class="dl">'</span><span class="s1">Accept</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span>
+    <span class="p">},</span>
+    <span class="na">formData</span><span class="p">:</span> <span class="p">{</span>
+
+    <span class="p">}</span>
+<span class="p">};</span>
+<span class="nx">request</span><span class="p">(</span><span class="nx">options</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
+<span class="p">});</span>
+
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">"{baseUrl}/vm/{vmId}/reset"</span>
+
+<span class="n">payload</span><span class="o">=</span><span class="p">{}</span>
+<span class="n">files</span><span class="o">=</span><span class="p">{}</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'Authorization'</span><span class="p">:</span> <span class="s">'Basic {token}'</span><span class="p">,</span>
+  <span class="s">'Accept'</span><span class="p">:</span> <span class="s">'application/json'</span>
+<span class="p">}</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">request</span><span class="p">(</span><span class="s">"POST"</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="n">files</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> POST <span class="s1">'{baseUrl}/vm/{vmId}/reset'</span> <span class="se">\</span>
+<span class="nt">--header</span> <span class="s1">'Authorization: Basic {token}'</span>
 
 </code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$curl</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
 
@@ -787,7 +939,32 @@ Remember change {vmID} with your vm id in url
 <aside class="notice">
 Remember change {vmID} with your vm id in url
 </aside>
-<h2 id='get-all-your-vms'>Get all your VMs</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'{baseUrl}/vm'</span> <span class="se">\</span>
+<h2 id='get-all-your-vms'>Get all your VMs</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">request</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="dl">'</span><span class="s1">method</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">GET</span><span class="dl">'</span><span class="p">,</span>
+    <span class="dl">'</span><span class="s1">url</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{baseUrl}/vm</span><span class="dl">'</span><span class="p">,</span>
+    <span class="dl">'</span><span class="s1">headers</span><span class="dl">'</span><span class="p">:</span> <span class="p">{</span>
+        <span class="dl">'</span><span class="s1">Accept</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span><span class="p">,</span>
+        <span class="dl">'</span><span class="s1">Authorization</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Basic {token}</span><span class="dl">'</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+<span class="nx">request</span><span class="p">(</span><span class="nx">options</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
+<span class="p">});</span>
+
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">"{baseUrl}/vm"</span>
+<span class="n">payload</span><span class="o">=</span><span class="p">{}</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'Accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+  <span class="s">'Authorization'</span><span class="p">:</span> <span class="s">'Basic {token}'</span>
+<span class="p">}</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">request</span><span class="p">(</span><span class="s">"GET"</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'{baseUrl}/vm'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Basic {token}'</span>
 </code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$curl</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
 
@@ -865,7 +1042,32 @@ Remember change {vmID} with your vm id in url
 <p>This endpoint retrieves your all servers.</p>
 <h3 id='http-request-5'>HTTP Request</h3>
 <p><code>GET {baseUrl}/vm</code></p>
-<h2 id='get-vm-info'>Get VM info</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'{baseUrl}/vm/{vmId}/info'</span> <span class="se">\</span>
+<h2 id='get-vm-info'>Get VM info</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">request</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="dl">'</span><span class="s1">method</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">GET</span><span class="dl">'</span><span class="p">,</span>
+    <span class="dl">'</span><span class="s1">url</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{baseUrl}/vm/{vmId}/info</span><span class="dl">'</span><span class="p">,</span>
+    <span class="dl">'</span><span class="s1">headers</span><span class="dl">'</span><span class="p">:</span> <span class="p">{</span>
+        <span class="dl">'</span><span class="s1">Accept</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span><span class="p">,</span>
+        <span class="dl">'</span><span class="s1">Authorization</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Basic {token}</span><span class="dl">'</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+<span class="nx">request</span><span class="p">(</span><span class="nx">options</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
+<span class="p">});</span>
+
+</code></pre></div><div class="highlight"><pre class="highlight plaintext"><code>import requests
+
+url = "{baseUrl}/vm/{vmId}/info"
+payload={}
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'Basic {token}'
+}
+
+response = requests.request("GET", url, headers=headers, data=payload)
+print(response.text)
+</code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'{baseUrl}/vm/{vmId}/info'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Basic {token}'</span>
 </code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$curl</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
 
@@ -954,7 +1156,32 @@ Remember change {vmID} with your vm id in url
 <aside class="notice">
 Remember change {vmID} with your vm id in url
 </aside>
-<h2 id='get-vm-ips-list'>Get VM ips list</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'{baseUrl}/vm/{vmId}/ip/list'</span> <span class="se">\</span>
+<h2 id='get-vm-ips-list'>Get VM ips list</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">request</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="dl">'</span><span class="s1">method</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">GET</span><span class="dl">'</span><span class="p">,</span>
+  <span class="dl">'</span><span class="s1">url</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{baseUrl}/vm/{vmId}/ip/list</span><span class="dl">'</span><span class="p">,</span>
+  <span class="dl">'</span><span class="s1">headers</span><span class="dl">'</span><span class="p">:</span> <span class="p">{</span>
+    <span class="dl">'</span><span class="s1">Accept</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span><span class="p">,</span>
+    <span class="dl">'</span><span class="s1">Authorization</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Basic {token}</span><span class="dl">'</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+<span class="nx">request</span><span class="p">(</span><span class="nx">options</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
+<span class="p">});</span>
+
+</code></pre></div><div class="highlight"><pre class="highlight plaintext"><code>import requests
+
+url = "{baseUrl}/vm/{vmId}/ip/list"
+payload={}
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'Basic {token}'
+}
+
+response = requests.request("GET", url, headers=headers, data=payload)
+print(response.text)
+</code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'{baseUrl}/vm/{vmId}/ip/list'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Basic {token}'</span>
 </code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$curl</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
 
@@ -1009,8 +1236,37 @@ Remember change {vmID} with your vm id in url
 <aside class="notice">
 Remember change {vmID} with your vm id in url
 </aside>
-<h2 id='change-vm-title'>Change vm title</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> PUT <span class="s1">'{baseUrl}/vm/{vmId}changeTitle'</span> <span class="se">\</span>
-<span class="nt">--header</span> <span class="s1">'Authorization: Basic {token}'</span> <span class="se">\</span>
+<h2 id='change-vm-title'>Change vm title</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">request</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="dl">'</span><span class="s1">method</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">PUT</span><span class="dl">'</span><span class="p">,</span>
+    <span class="dl">'</span><span class="s1">url</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{baseUrl}/vm/{vmId}changeTitle</span><span class="dl">'</span><span class="p">,</span>
+    <span class="dl">'</span><span class="s1">headers</span><span class="dl">'</span><span class="p">:</span> <span class="p">{</span>
+        <span class="dl">'</span><span class="s1">Content-Type</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/x-www-form-urlencoded</span><span class="dl">'</span><span class="p">,</span>
+        <span class="dl">'</span><span class="s1">Accept</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span><span class="p">,</span>
+        <span class="dl">'</span><span class="s1">Authorization</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Basic {token}</span><span class="dl">'</span>
+    <span class="p">},</span>
+    <span class="na">form</span><span class="p">:</span> <span class="p">{</span>
+        <span class="dl">'</span><span class="s1">title</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">new server2</span><span class="dl">'</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+<span class="nx">request</span><span class="p">(</span><span class="nx">options</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div><div class="highlight"><pre class="highlight plaintext"><code>import requests
+
+url = "{baseUrl}/vm/{vmId}changeTitle"
+payload='title=new%20server2'
+headers = {
+  'Content-Type': 'application/x-www-form-urlencoded',
+  'Accept': 'application/json',
+  'Authorization': 'Basic {token}',
+}
+
+response = requests.request("PUT", url, headers=headers, data=payload)
+print(response.text)
+</code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> PUT <span class="s1">'{baseUrl}/vm/{vmId}changeTitle'</span> <span class="se">\</span>
+<span class="nt">--header</span> <span class="s1">'Authorization: Basic {token}'</span>
 <span class="nt">--form</span> <span class="s1">'title="test11"'</span>
 
 </code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$curl</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
@@ -1084,8 +1340,37 @@ Remember change {vmID} with your vm id in url
 <aside class="notice">
 Remember change {vmID} with your vm id in url
 </aside>
-<h2 id='set-daily-budget'>Set daily budget</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> PUT <span class="s1">'{baseUrl}/vm/{vmId}/dailybudget/set?daily_budget={amount}'</span> <span class="se">\</span>
-<span class="nt">--header</span> <span class="s1">'Authorization: Basic {token}'</span> <span class="se">\</span>
+<h2 id='set-daily-budget'>Set daily budget</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">request</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="dl">'</span><span class="s1">method</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">PUT</span><span class="dl">'</span><span class="p">,</span>
+    <span class="dl">'</span><span class="s1">url</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{baseUrl}/vm/{vmId}/dailybudget/set</span><span class="dl">'</span><span class="p">,</span>
+    <span class="dl">'</span><span class="s1">headers</span><span class="dl">'</span><span class="p">:</span> <span class="p">{</span>
+        <span class="dl">'</span><span class="s1">Content-Type</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/x-www-form-urlencoded</span><span class="dl">'</span><span class="p">,</span>
+        <span class="dl">'</span><span class="s1">Accept</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span><span class="p">,</span>
+        <span class="dl">'</span><span class="s1">Authorization</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Basic {token}</span><span class="dl">'</span>
+    <span class="p">},</span>
+    <span class="na">form</span><span class="p">:</span> <span class="p">{</span>
+        <span class="dl">'</span><span class="s1">daily_budget</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{amount}</span><span class="dl">'</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+<span class="nx">request</span><span class="p">(</span><span class="nx">options</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">"{baseUrl}/vm/{vmId}/dailybudget/set"</span>
+<span class="n">payload</span><span class="o">=</span><span class="s">'daily_budget={amount}'</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/x-www-form-urlencoded'</span><span class="p">,</span>
+  <span class="s">'Accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+  <span class="s">'Authorization'</span><span class="p">:</span> <span class="s">'Basic {token}'</span>
+<span class="p">}</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">request</span><span class="p">(</span><span class="s">"PUT"</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> PUT <span class="s1">'{baseUrl}/vm/{vmId}/dailybudget/set?daily_budget={amount}'</span> <span class="se">\</span>
+<span class="nt">--header</span> <span class="s1">'Authorization: Basic {token}'</span>
 
 </code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$curl</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
 
@@ -1162,9 +1447,46 @@ Remember change {vmID} with your vm id in url
 Remember change {vmID} with your vm id in url
 Remember change {amount} with your specific amount for daily budget in url
 </aside>
-<h2 id='change-vm-spaces'>Change VM spaces</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> POST <span class="s1">'{baseUrl}/vm/{vmId}/changeSpecs'</span> <span class="se">\</span>
-<span class="nt">--header</span> <span class="s1">'Authorization: Basic {token}'</span> <span class="se">\</span>
+<h2 id='change-vm-spaces'>Change VM spaces</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">request</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="dl">'</span><span class="s1">method</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">POST</span><span class="dl">'</span><span class="p">,</span>
+    <span class="dl">'</span><span class="s1">url</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{baseUrl}/vm/{vmId}/changeSpecs</span><span class="dl">'</span><span class="p">,</span>
+    <span class="dl">'</span><span class="s1">headers</span><span class="dl">'</span><span class="p">:</span> <span class="p">{</span>
+        <span class="dl">'</span><span class="s1">Accept</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span><span class="p">,</span>
+        <span class="dl">'</span><span class="s1">Authorization</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Basic {token}</span><span class="dl">'</span>
+    <span class="p">},</span>
+    <span class="na">formData</span><span class="p">:</span> <span class="p">{</span>
+        <span class="dl">'</span><span class="s1">ram</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{ram}</span><span class="dl">'</span><span class="p">,</span>
+        <span class="dl">'</span><span class="s1">cpu</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{cpu}</span><span class="dl">'</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+<span class="nx">request</span><span class="p">(</span><span class="nx">options</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
+<span class="p">});</span>
 
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">"{baseUrl}/vm/{vmId}/changeSpecs"</span>
+
+<span class="n">payload</span><span class="o">=</span><span class="p">{</span>
+    <span class="s">'ram'</span><span class="p">:</span> <span class="s">'{ram}'</span><span class="p">,</span>
+    <span class="s">'cpu'</span><span class="p">:</span> <span class="s">'{cpu}'</span>
+<span class="p">}</span>
+<span class="n">files</span><span class="o">=</span><span class="p">[</span>
+
+<span class="p">]</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'Accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+  <span class="s">'Authorization'</span><span class="p">:</span> <span class="s">'Basic {token}'</span>
+<span class="p">}</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">request</span><span class="p">(</span><span class="s">"POST"</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="n">files</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> POST <span class="s1">'{baseUrl}/vm/{vmId}/changeSpecs'</span> <span class="se">\</span>
+<span class="nt">--header</span> <span class="s1">'Authorization: Basic {token}'</span><span class="se">\</span>
+<span class="nt">--form</span> <span class="s1">'ram="{ram}"'</span> <span class="se">\</span>
+<span class="nt">--form</span> <span class="s1">'cpu="{cpu}"'</span>
 </code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$curl</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
 
 <span class="nb">curl_setopt_array</span><span class="p">(</span><span class="nv">$curl</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
@@ -1176,6 +1498,7 @@ Remember change {amount} with your specific amount for daily budget in url
   <span class="no">CURLOPT_FOLLOWLOCATION</span> <span class="o">=&gt;</span> <span class="kc">true</span><span class="p">,</span>
   <span class="no">CURLOPT_HTTP_VERSION</span> <span class="o">=&gt;</span> <span class="no">CURL_HTTP_VERSION_1_1</span><span class="p">,</span>
   <span class="no">CURLOPT_CUSTOMREQUEST</span> <span class="o">=&gt;</span> <span class="s1">'POST'</span><span class="p">,</span>
+  <span class="no">CURLOPT_POSTFIELDS</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">'ram'</span> <span class="o">=&gt;</span> <span class="s1">'{ram}'</span><span class="p">,</span><span class="s1">'cpu'</span> <span class="o">=&gt;</span> <span class="s1">'{cpu}'</span><span class="p">),</span>
   <span class="no">CURLOPT_HTTPHEADER</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
     <span class="s1">'Authorization: Basic {token}'</span><span class="p">,</span>
   <span class="p">),</span>
@@ -1237,7 +1560,33 @@ Remember change {amount} with your specific amount for daily budget in url
 <aside class="notice">
 Remember change {vmID} with your vm id in url
 </aside>
-<h2 id='get-os-list'>Get OS list</h2><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'{baseUrl}/vm/os/list/all'</span> <span class="se">\</span>
+<h2 id='get-os-list'>Get OS list</h2><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">request</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="dl">'</span><span class="s1">method</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">GET</span><span class="dl">'</span><span class="p">,</span>
+  <span class="dl">'</span><span class="s1">url</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">{baseUrl}/vm/os/list/all</span><span class="dl">'</span><span class="p">,</span>
+  <span class="dl">'</span><span class="s1">headers</span><span class="dl">'</span><span class="p">:</span> <span class="p">{</span>
+    <span class="dl">'</span><span class="s1">Accept</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span><span class="p">,</span>
+    <span class="dl">'</span><span class="s1">Authorization</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Basic {token}</span><span class="dl">'</span><span class="p">,</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+<span class="nx">request</span><span class="p">(</span><span class="nx">options</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
+<span class="p">});</span>
+
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">"baseUrl}/vm/os/list/all"</span>
+<span class="n">payload</span><span class="o">=</span><span class="p">{}</span>
+<span class="n">files</span><span class="o">=</span><span class="p">{}</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">'Accept'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+  <span class="s">'Authorization'</span><span class="p">:</span> <span class="s">'Basic {token}'</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">request</span><span class="p">(</span><span class="s">"GET"</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="n">files</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--location</span> <span class="nt">--request</span> GET <span class="s1">'{baseUrl}/vm/os/list/all'</span> <span class="se">\</span>
 <span class="nt">--header</span> <span class="s1">'Authorization: Basic {token}'</span>
 </code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$curl</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
 
@@ -1336,6 +1685,8 @@ Remember change {vmID} with your vm id in url
       </div>
       <div class="dark-box">
           <div class="lang-selector">
+                <a href="#" data-language-name="javascript">javascript</a>
+                <a href="#" data-language-name="python">python</a>
                 <a href="#" data-language-name="shell">shell</a>
                 <a href="#" data-language-name="php">php</a>
           </div>
